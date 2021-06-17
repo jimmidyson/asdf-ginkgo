@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+echo "asdf-ginkgo is an asdf-vm plugin to install, download or compile Ginkgo."

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Shamelessly stolen from https://github.com/beardix/asdf-yq/blob/master/bin/list-all#L7
+# Thank you for your great and simple work
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+error_exit() {
+  echo "$1" >&2
+  exit "${2:-1}"
+}
+
+install() {
+  declare -r install_type="$1"
+  declare -r download_path="$2"
+  declare -r install_path="$3"
+
+  cd "$download_path"
+  export GOBIN="$install_path/bin"
+  go install --tags tools github.com/onsi/ginkgo/ginkgo
+}
+
+install "$ASDF_INSTALL_TYPE" "$ASDF_DOWNLOAD_PATH" "$ASDF_INSTALL_PATH"
