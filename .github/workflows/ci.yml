@@ -25,10 +25,18 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '^1.16.5'
-      - name: Running asdf's plugin-test
-        uses: asdf-vm/actions/plugin-test@v1.0.1
+      - name: Running asdf's plugin-test for latest
+        uses: asdf-vm/actions/plugin-test@v1
         with:
           command: ginkgo version
+        env:
+          GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      - name: Running asdf's plugin-test for specific version
+        uses: asdf-vm/actions/plugin-test@v1
+        with:
+          command: ginkgo version
+          version: ref:85bd7c822fe0bfee627df2109f70d63be0f7f226
         env:
           GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
