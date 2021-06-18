@@ -1,35 +1,3 @@
 #!/usr/bin/env bash
 
-set -o errexit
-set -o nounset
-set -o pipefail
-
-download() {
-  declare -r download_type="$1"
-  declare -r download_version="$2"
-  declare -r download_path="$3"
-
-  rm -rf "$download_path"
-  git init "$download_path"
-  cd "$download_path"
-  cat << EOF > tools.go
-// +build tools
-
-package tools
-
-import (
-	_ "github.com/onsi/ginkgo/ginkgo"
-)
-EOF
-cat << EOF > go.mod
-module github.com/jimmidyson/asdf-ginkgo
-
-go 1.16
-
-require github.com/onsi/ginkgo v${download_version}
-EOF
-  go mod tidy
-}
-
-
-download "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_DOWNLOAD_PATH"
+# This doesn't need to do anything, installed via go install - see install script
