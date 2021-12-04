@@ -4,9 +4,13 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+module_path="ginkgo"
 if [[ "$ASDF_INSTALL_TYPE" == "version" ]]; then
+  if [[ "${ASDF_INSTALL_VERSION:0:1}" -gt "1" ]]; then
+    module_path="v2/${module_path}"
+  fi
   ASDF_INSTALL_VERSION="v${ASDF_INSTALL_VERSION}"
 fi
 
 export GOBIN="${ASDF_INSTALL_PATH}/bin"
-go install github.com/onsi/ginkgo/ginkgo@"${ASDF_INSTALL_VERSION}"
+go install "github.com/onsi/ginkgo/${module_path}@${ASDF_INSTALL_VERSION}"
